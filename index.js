@@ -4,7 +4,6 @@
 */
 'use strict';
 
-const DiagnosticSeverity = require('vscode-languageserver').DiagnosticSeverity;
 const filteredArrayToSentence = require('filtered-array-to-sentence');
 const isVFileMessage = require('is-vfile-message');
 
@@ -28,7 +27,8 @@ module.exports = function vFileMessagesToVSCodeDiagnostics(messages) {
   return messages.map(function makeDiagnostic(message) {
     return {
       message: message.reason,
-      severity: message.fatal === true ? DiagnosticSeverity.Error : DiagnosticSeverity.Warning,
+      // https://github.com/Microsoft/vscode-languageserver-node/blob/v2.6.2/types/src/main.ts#L130-L147
+      severity: message.fatal === true ? 1 : 2,
       range: {
         start: {
           line: (message.location.start.line || message.line || 1) - 1,

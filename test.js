@@ -1,10 +1,13 @@
 'use strict';
 
 const alex = require('alex');
-const {DiagnosticSeverity} = require('vscode-languageserver');
 const VFile = require('vfile');
 const vFileMessagesToVSCodeDiagnostics = require('.');
 const {test} = require('tape');
+
+// https://github.com/Microsoft/vscode-languageserver-node/blob/v2.6.2/types/src/main.ts#L130-L147
+const ERROR = 1;
+const WARNING = 2;
 
 test('vFileMessagesToVSCodeDiagnostics()', t => {
   t.plan(8);
@@ -30,7 +33,7 @@ test('vFileMessagesToVSCodeDiagnostics()', t => {
             line: 0
           }
         },
-        severity: DiagnosticSeverity.Warning
+        severity: WARNING
       },
       {
         message: '`maniac` may be insensitive, use `fanatic`, `zealot`, `enthusiast` instead',
@@ -44,7 +47,7 @@ test('vFileMessagesToVSCodeDiagnostics()', t => {
             line: 0
           }
         },
-        severity: DiagnosticSeverity.Warning
+        severity: WARNING
       }
     ],
     'should convert VFile#messages to VS Code diagnostics.'
@@ -69,7 +72,7 @@ test('vFileMessagesToVSCodeDiagnostics()', t => {
             character: 0
           }
         },
-        severity: DiagnosticSeverity.Error
+        severity: ERROR
       }
     ],
     'should regard lines as 0 when the message doesn\'t have any position info.'
