@@ -5,7 +5,7 @@
   "repository": "shinnn/vfile-messages-to-vscode-diagnostics",
   "author": "Shinnosuke Watanabe (https://github.com/shinnn)",
   "scripts": {
-    "pretest": "eslint --fix --config @shinnn/node index.js test.js",
+    "pretest": "eslint --fix --format=codeframe index.js test.js",
     "test": "node --throw-deprecation --track-heap-objects test.js",
     "coverage": "istanbul cover test.js"
   },
@@ -36,10 +36,13 @@
   },
   "devDependencies": {
     "@shinnn/eslint-config-node": "^3.0.0",
-    "alex": "^3.1.0",
-    "eslint": "^3.2.2",
-    "istanbul": "^0.4.4",
-    "tape": "^4.6.0",
-    "vfile": "^1.4.0"
+    "alex": "^4.0.1",
+    "eslint": "^3.10.2",
+    "istanbul": "^0.4.5",
+    "tape": "^4.6.3",
+    "vfile": "^2.0.0"
+  },
+  "eslintConfig": {
+    "extends": "@shinnn/node"
   }
 }

@@ -54,8 +54,8 @@ test('vFileMessagesToVSCodeDiagnostics()', t => {
   );
 
   const file = new VFile();
-  file.quiet = true;
-  file.fail('foo');
+  file.message('foo');
+  file.messages[0].fatal = true;
 
   t.deepEqual(
     vFileMessagesToVSCodeDiagnostics(file.messages),

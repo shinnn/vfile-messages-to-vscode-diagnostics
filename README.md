@@ -6,16 +6,16 @@
 [![Dependency Status](https://david-dm.org/shinnn/vfile-messages-to-vscode-diagnostics.svg)](https://david-dm.org/shinnn/vfile-messages-to-vscode-diagnostics)
 [![devDependency Status](https://david-dm.org/shinnn/vfile-messages-to-vscode-diagnostics/dev-status.svg)](https://david-dm.org/shinnn/vfile-messages-to-vscode-diagnostics#info=devDependencies)
 
-A [Node](https://nodejs.org/) module to convert [VFile#messages](https://github.com/wooorm/vfile#vfilemessages) into an array of [VS Code](https://code.visualstudio.com/) [diagnostic](https://github.com/Microsoft/vscode-extension-vscode/blob/0.10.6/vscode.d.ts#L2220)s
+A [Node.js](https://nodejs.org/) module to convert [VFile#messages](https://github.com/wooorm/vfile#vfilemessages) into an array of [VS Code](https://code.visualstudio.com/) [diagnostic](https://github.com/Microsoft/vscode-languageserver-node/blob/v2.6.2/types/src/main.ts#L153)s
 
 ```javascript
 const VFile = require('vfile');
 const vFileMessagesToVSCodeDiagnostics = require('vfile-messages-to-vscode-diagnostics');
 
-vFileMessagesToVSCodeDiagnostics(new VFile().warn('error!', {line: 10, column: 2}));
+vFileMessagesToVSCodeDiagnostics(new VFile().message('warning!', {line: 10, column: 2}));
 /* =>
   [{
-    message: 'error!',
+    message: 'warning!',
     severity: 2,
     range: {
       start: {line: 9, character: 1},
@@ -51,8 +51,8 @@ const VFile = require('vfile');
 const vFileMessagesToVSCodeDiagnostics = require('vfile-messages-to-vscode-diagnostics');
 
 const file = new VFile();
-file.warn('err1');
-file.warn('err2', {
+file.message('warning1');
+file.message('warning2', {
   position: {
     start: {line: 23, column: 5},
     end: {line: 23, column: 11}
@@ -62,14 +62,14 @@ file.warn('err2', {
 vFileMessagesToVSCodeDiagnostics(file.messages);
 /* =>
   [{
-    message: 'err1',
+    message: 'warning1',
     severity: 2,
     range: {
       start: {line: 0, character: 0},
       end: {line: 0, character: 0}
-    } 
+    }
   }, {
-    message: 'err2',
+    message: 'warning2',
     severity: 2,
     range: {
       start: {line: 22, character: 4},
@@ -81,6 +81,6 @@ vFileMessagesToVSCodeDiagnostics(file.messages);
 
 ## License
 
-Copyright (c) 2015 [Shinnosuke Watanabe](https://github.com/shinnn)
+Copyright (c) 2015 - 2016 [Shinnosuke Watanabe](https://github.com/shinnn)
 
 Licensed under [the MIT License](./LICENSE).
