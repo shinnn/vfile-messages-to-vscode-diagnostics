@@ -1,4 +1,4 @@
-'use strong';
+'use strict';
 
 const alex = require('alex');
 const {DiagnosticSeverity} = require('vscode-languageserver');
