@@ -4,14 +4,19 @@
 */
 'use strict';
 
+const inspect = require('util').inspect;
+
 const filteredArrayToSentence = require('filtered-array-to-sentence');
 const isVFileMessage = require('is-vfile-message');
+
+const VFILE_MESSAGE_URL = 'https://github.com/wooorm/vfile#vfilemessage';
 
 module.exports = function vFileMessagesToVSCodeDiagnostics(messages) {
   if (!Array.isArray(messages)) {
     throw new TypeError(
-      String(messages) +
-      ' is not an array. Expected an array of VFileMessage objects.'
+      inspect(messages) +
+      ' is not an array. Expected an array of VFileMessage objects. ' +
+      VFILE_MESSAGE_URL
     );
   }
 
@@ -20,7 +25,8 @@ module.exports = function vFileMessagesToVSCodeDiagnostics(messages) {
     throw new TypeError(
       'The array includes invalid value(s): ' +
       invalidValues +
-      '. All items in the array must be VFileMessage objects.'
+      '. All items in the array must be VFileMessage objects. ' +
+      VFILE_MESSAGE_URL
     );
   }
 

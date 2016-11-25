@@ -81,20 +81,20 @@ test('vFileMessagesToVSCodeDiagnostics()', t => {
   t.deepEqual([], [], 'should return an empty array when it takes an empty array.');
 
   t.throws(
-    () => vFileMessagesToVSCodeDiagnostics(1),
-    /TypeError.*1 is not an array\. Expected an array of VFileMessage objects\./,
+    () => vFileMessagesToVSCodeDiagnostics({'not an': 'array'}),
+    /^TypeError.*{ 'not an': 'array' } is not an array\. Expected an array of VFileMessage objects\. /,
     'should throw a type error when it takes non-array value.'
   );
 
   t.throws(
     () => vFileMessagesToVSCodeDiagnostics(file.messages.concat(['foo'])),
-    /TypeError.*The array includes invalid value\(s\): foo \(index: 1\)\./,
+    /^TypeError.*The array includes invalid value\(s\): foo \(index: 1\)\. /,
     'should throw a type error when the array includes a non-VFileMessage value.'
   );
 
   t.throws(
     () => vFileMessagesToVSCodeDiagnostics(file.messages.concat([8, 9])),
-    /TypeError.*8 \(index: 1\) and 9 \(index: 2\)\. All items in the array must be VFileMessage objects\./,
+    /^TypeError.*8 \(index: 1\) and 9 \(index: 2\)\. All items in the array must be VFileMessage objects\./,
     'should throw a type error when the array includes non-VFileMessage values.'
   );
 
