@@ -8,22 +8,25 @@ const isVFileMessage = require('is-vfile-message');
 const VFILE_MESSAGE_URL = 'https://github.com/wooorm/vfile#vfilemessage';
 
 module.exports = function vFileMessagesToVSCodeDiagnostics(messages) {
-	if (!Array.isArray(messages)) {
-		throw new TypeError(`${inspect(messages)
-		} is not an array. Expected an array of VFileMessage objects. ${
-			VFILE_MESSAGE_URL}`);
+	if (
+		messages === null ||
+		typeof messages !== 'object' ||
+		typeof messages[Symbol.iterator] !== 'function' ||
+		messages instanceof Map
+	) {
+		throw new TypeError(`Expected <Iterable<VFileMessage>> except for <string|Map>, but got ${inspect(messages)}.`);
 	}
 
-	const invalidValues = filteredArrayToSentence(messages, v => !isVFileMessage(v));
-	if (invalidValues !== '') {
-		throw new TypeError(`The array includes invalid value(s): ${
-			invalidValues
-		}. All items in the array must be VFileMessage objects. ${
-			VFILE_MESSAGE_URL}`);
-	}
+	const diagnostics = [];
 
-	return messages.map(function makeDiagnostic(message) {
-		return {
+	for (const message of messages) {
+		if (!(message instanceof VFileMessage)) {
+			throw new TypeError(`Expected every item to be a VFileMessage, but included ${
+				inspect(message)
+			}.`);
+		}
+
+		diagnostics.push({
 			message: message.reason,
 			// https://github.com/Microsoft/vscode-languageserver-node/blob/v2.6.2/types/src/main.ts#L130-L147
 			severity: message.fatal === true ? 1 : 2,
@@ -37,6 +40,8 @@ module.exports = function vFileMessagesToVSCodeDiagnostics(messages) {
 					character: (message.location.end.column || message.column || 1) - 1
 				}
 			}
-		};
-	});
+		});
+	}
+
+	return diagnostics;
 };
