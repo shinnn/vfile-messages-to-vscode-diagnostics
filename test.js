@@ -10,14 +10,6 @@ const ERROR = 1;
 const WARNING = 2;
 
 test('vFileMessagesToVSCodeDiagnostics()', t => {
-	t.plan(8);
-
-	t.equal(
-		vFileMessagesToVSCodeDiagnostics.name,
-		'vFileMessagesToVSCodeDiagnostics',
-		'should have a function name.'
-	);
-
 	t.deepEqual(
 		vFileMessagesToVSCodeDiagnostics(alex('He is a video game maniac.').messages),
 		[
@@ -82,25 +74,21 @@ test('vFileMessagesToVSCodeDiagnostics()', t => {
 
 	t.throws(
 		() => vFileMessagesToVSCodeDiagnostics({'not an': 'array'}),
-		/^TypeError.*{ 'not an': 'array' } is not an array\. Expected an array of VFileMessage objects\. /,
+		/^TypeError.*Expected <Iterable<VFileMessage>> except for <string\|Map>, but got \{ 'not an': 'array' \}\./u,
 		'should throw a type error when it takes non-array value.'
 	);
 
 	t.throws(
 		() => vFileMessagesToVSCodeDiagnostics(file.messages.concat(['foo'])),
-		/^TypeError.*The array includes invalid value\(s\): foo \(index: 1\)\. /,
+		/^TypeError.*Expected every item to be a VFileMessage, but included 'foo'\./u,
 		'should throw a type error when the array includes a non-VFileMessage value.'
 	);
 
 	t.throws(
-		() => vFileMessagesToVSCodeDiagnostics(file.messages.concat([8, 9])),
-		/^TypeError.*8 \(index: 1\) and 9 \(index: 2\)\. All items in the array must be VFileMessage objects\./,
-		'should throw a type error when the array includes non-VFileMessage values.'
-	);
-
-	t.throws(
 		() => vFileMessagesToVSCodeDiagnostics(),
-		/TypeError.*undefined is not an array\. Expected an array of VFileMessage objects\./,
+		/^TypeError.*Expected <Iterable<VFileMessage>> except for <string\|Map>, but got undefined\./u,
 		'should throw a type error when it takes no arguments.'
 	);
+
+	t.end();
 });

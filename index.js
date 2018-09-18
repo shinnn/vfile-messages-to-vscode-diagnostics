@@ -2,10 +2,7 @@
 
 const inspect = require('util').inspect;
 
-const filteredArrayToSentence = require('filtered-array-to-sentence');
-const isVFileMessage = require('is-vfile-message');
-
-const VFILE_MESSAGE_URL = 'https://github.com/wooorm/vfile#vfilemessage';
+const VFileMessage = require('vfile-message');
 
 module.exports = function vFileMessagesToVSCodeDiagnostics(messages) {
 	if (
