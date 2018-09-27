@@ -4,7 +4,7 @@
 	"description": "Convert VFile#messages into an array of VS Code diagnostics",
 	"repository": "shinnn/vfile-messages-to-vscode-diagnostics",
 	"author": "Shinnosuke Watanabe (https://github.com/shinnn)",
-	"license": "MIT",
+	"license": "ISC",
 	"scripts": {
 		"pretest": "eslint .",
 		"test": "nyc node test.js"

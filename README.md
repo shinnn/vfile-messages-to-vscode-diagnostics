@@ -25,7 +25,7 @@ vFileMessagesToVSCodeDiagnostics(new VFile().message('warning!', {line: 10, colu
 
 ## Installation
 
-[Use]((https://docs.npmjs.com/cli/install) [npm](https://docs.npmjs.com/getting-started/what-is-npm).
+[Use](https://docs.npmjs.com/cli/install) [npm](https://docs.npmjs.com/getting-started/what-is-npm).
 
 ```
 npm install vfile-messages-to-vscode-diagnostics
@@ -77,6 +77,4 @@ vFileMessagesToVSCodeDiagnostics(file.messages);
 
 ## License
 
-Copyright (c) 2015 - 2018 [Shinnosuke Watanabe](https://github.com/shinnn)
-
-Licensed under [the MIT License](./LICENSE).
+[ISC License](./LICENSE) © 2018 Shinnosuke Watanabe
