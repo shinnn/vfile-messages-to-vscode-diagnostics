@@ -1,17 +1,23 @@
 'use strict';
 
-const alex = require('alex');
+const retext = require('retext');
+const retextEquality = require('retext-equality');
+const retextProfanities = require('retext-profanities');
+const {test} = require('tape');
 const VFile = require('vfile');
 const vFileMessagesToVSCodeDiagnostics = require('.');
-const {test} = require('tape');
+const vFileSort = require('vfile-sort');
 
 // https://github.com/Microsoft/vscode-languageserver-node/blob/v2.6.2/types/src/main.ts#L130-L147
 const ERROR = 1;
 const WARNING = 2;
 
-test('vFileMessagesToVSCodeDiagnostics()', t => {
+test('vFileMessagesToVSCodeDiagnostics()', async t => {
 	t.deepEqual(
-		vFileMessagesToVSCodeDiagnostics(alex('He is a video game maniac.').messages),
+		vFileMessagesToVSCodeDiagnostics(vFileSort(await retext()
+		.use(retextEquality)
+		.use(retextProfanities)
+		.process('He is a video game maniac.')).messages),
 		[
 			{
 				message: '`He` may be insensitive, use `They`, `It` instead',
